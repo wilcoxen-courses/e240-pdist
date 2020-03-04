@@ -45,11 +45,11 @@ to the `id` field for each household.
     That is, it is *not* a method built into the series and dataframe
     objects so it is *not* invoked like this: `variable.qcut()`.
     
-1. As in the earier exercise, create a variable called `pd1` that is equal 
+1. As in the earlier exercise, create a variable called `pd1` that is equal 
 to 53.35 and one called `pd2` equal to 55.27. Then create a variable called 
 `dp` that is equal to `pd2 - pd1`.
 
-1. Compute the ETRs by multiplying 100 times `pd` times the `qd2` column 
+1. Compute the ETRs by multiplying 100 times `dp` times the `qd2` column 
 of `q` divided by the `inc` column of `hh`. Note that this would work
 correctly no matter what order `hh` and `q` were in because Pandas will 
 use the indexes to match up the income and quantity variables. Store 
@@ -68,20 +68,22 @@ the ETRs to 2 digits. Store the result in a variable called `medians`.
 
 1. Print `medians`. Be sure to look over the result to make sure it 
 matches the previous results. Note that Pandas automatically omits 
-repeated headings
+repeated headings.
 
 1. Now print a blank line and then print `medians.index`. Notice that it's 
 a MultiIndex, which is really just a list of tuples where the first 
 element is the type and the second is the quintile. That makes it 
 possible to pull out subsets of the information, which we'll do next. 
 
-1. Print an appropriate heading and then print `medians[3]`. That will be 
-the medians for type 3 since the type is the first element in the tuples.
+1. Print an appropriate heading and then list the medians for type 3
+by printing `medians[3]`. The `[3]` instructs Pandas to pick out all 
+the elements where 3 is the first element in the index tuple.
 
-1. Print an appropriate heading and then print the medians for the 5th 
-quintile by printing `medians[:,5]`. The colon is a placeholder that 
-indicates that all types (the first element in the tuples) should be 
-included.
+1. Print an appropriate heading and then list the medians for the 5th 
+quintile by printing `medians[:,5]`. The 5 indicates that tuples with 
+5 in the quintile position should be printed, and the colon is a 
+placeholder that indicates that all types (the first element in the 
+tuples) should be included. 
 
 1. Print an appropriate heading and then print the median ETR for type 3, 
 quintile 5, by printing `medians[3,5]`.
