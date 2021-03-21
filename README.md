@@ -46,13 +46,17 @@ A script called **etr.py** that carries out the calculations described below.
 
 1. Print the index for `med_b`. Notice that it's a list of tuples with the type as the first element and the quintile as the second element.
 
-1. Print an appropriate heading and then list the detailed medians for type 3 by printing `med_b[3]`. The `[3]` instructs Pandas to pick out all the elements where 3 is the first element in the index tuple. See the Tips section for an alternative approach.
+1. Print an appropriate heading and then print the detailed medians for type `3` by using the `.xs()` method (short for cross-section) on `med_b` with arguments `3` and `level="type"`. The `level` keyword tells Pandas that the `3` is associated with the `"type"` part, or level, of the index.
 
-1. Print an appropriate heading and then list the medians for the 5th quintile by printing `med_b[:,5]`. The 5 indicates that tuples with 5 in the quintile position should be printed, and the colon is a placeholder that indicates that all types (the first element in the tuples) should be included.
+1. Print an appropriate heading and then list the medians for the 5th quintile by using the `.xs()` method with arguments `5` and `level="quint"`.
 
-1. Print an appropriate heading and then print the median ETR for type 3, quintile 5, by printing `med_b[3,5]`.
+1. Finally, to emphasize the power of the automatic alignment built into Pandas, we'll do a quick calculation showing how the ETR for each type changes moving up the income distribution. Start by setting `etr_lowest` to the result of calling `.xs()` on `med_b` with arguments `1` and `level="quint"`.
 
-1. Finally, to emphasize the power of the automatic alignment built into Pandas, print an appropriate heading and then print `med_b - med_b[:,1]`. That will show how much higher the ETR is for each quintile for each type relative to the first one for that type. Pandas will automatically align the data to ensure that the household type matches when doing the subtraction.
+1. Print `etr_lowest`. You'll see that it's a series with `"type"` as its index.
+
+1. Now set variable `etr_change` to `med_b` minus `etr_lowest`. Pandas will automatically align the types, broadcast `etr_lowest` across all quintiles for each type (remember that `med_b` has two levels), and then do the subtraction. The result will be the difference in the ETR for each type and quintile from the ETR for quintile 1 of the same type. It's a quick way to see that the tax is progressive because the differences get progressively larger within each type.
+
+1. Print `etr_change`.
 
 ### Submitting
 
@@ -60,12 +64,4 @@ Once you're happy with everything and have committed all of the changes to your 
 
 ### Tips
 
-+ The last few steps printing out subsets of the results rely heavily on the order of the values in the square brackets matching the order of the groups in the index. An alternative approach that is a little more verbose but avoids relying on the ordering is to use the `.xs()` method (short for cross-section). It allows the specific part of the index (here, the types or the quintiles) to be specified explicitly. We'll use `.xs()` in future exercises; for now, here are some quick examples showing how it would be used here:
-
-    ```
-    # printing type 3:
-    print( med_b.xs(3,level='type') )
-
-    # printing quintile 5:
-    print( med_b.xs(5,level='quint') )
-    ```
++ To convince yourself that the last calculation is working correctly, use a pocket calculation to check a couple of the numbers. This feature of Pandas (aligning and broadcasting across index levels) is very useful and avoids a lot of steps that would otherwise have to be done manually. Pandas is essentially doing a many-to-one join on `med_b` and `etr_change` before doing the subtraction. However, it's all automatic and the code is much cleaner than it would be otherwise. 

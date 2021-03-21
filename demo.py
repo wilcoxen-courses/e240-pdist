@@ -3,29 +3,74 @@
 
 import pandas as pd
 
-incomes = pd.read_csv('state-data.csv',index_col='name')
-geocodes = pd.read_csv('state-geocodes.csv',index_col='Name')
+#
+#  Read county population data being careful about FIPS codes
+#
+
+fips = { 'state':str, 'county':str }
+county = pd.read_csv('county_pop.csv',dtype=fips)
+
+#
+#  Set the index to the state and county, and then rename the 
+#  population column to make it easier to read.
+#
+
+county = county.set_index(['state','county'])
+county = county.rename({'B01001_001E':'pop'},axis='columns')
 
 #%%
+#
+#  Divide the counties into deciles based on their populations
+#
 
-incomes['reg'] = geocodes['Region']
-incomes['div'] = geocodes['Division']
-incomes['fips'] = geocodes['State FIPS']
+dec = pd.qcut( county['pop'], 10, labels=range(1,11) )
+print( dec )
 
-grouped = incomes.groupby(['reg','div']) 
+#
+#  Add the decile into the dataframe
+#
 
-grouped_pop = grouped['pop']
-
-totals = grouped_pop.sum()/1e6
-
-print(totals.round(1))
+county['dec'] = dec
 
 #%%
+#
+#  Sort the counties by population
+#
 
-print( totals.index )
+county = county.sort_values('pop')
 
-print( '\nRegion: Northeast')
-print( totals[1] )
+#
+#  Use the .xs() method to select and print the counties for 
+#  state 04, which is Arizona 
+#
 
-print( '\nDivision: New England')
-print( totals[:,1] )
+print( county.xs('04',level='state') )
+
+#
+#  Now group the counties by state and calculate each state's population. 
+#  Then sort by population and print.
+#
+
+state = county.groupby('state')['pop'].sum()
+state = state.sort_values()
+
+print( state )
+
+#
+#  Calculate each county's population as a percent of its state's 
+#  population. Note that this works even though county has two index 
+#  levels (state and county) and state has only one (state), and on 
+#  top of that, state is in a different order. Pandas automatically
+#  aligns the common index level (state) and broadcasts the state 
+#  populations across each state's counties.
+#
+
+county['percent'] = 100*county['pop']/state
+
+print( county.xs('04',level='state') )
+
+#
+#  Check that each state's counties add up to 100%
+
+check = county.groupby('state')['percent'].sum()
+print( check )
