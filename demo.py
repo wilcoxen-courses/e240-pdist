@@ -1,22 +1,27 @@
-#! /bin/python3
-#  Spring 2020 (PJW)
+"""
+demo.py
+Spring 2022 PJW
+
+Demonstrate additional important features of Pandas.
+"""
 
 import pandas as pd
 
 #
-#  Read county population data being careful about FIPS codes
+#  Read county population data being careful to keep FIPS codes
+#  for both the state and county as strings
 #
 
 fips = { 'state':str, 'county':str }
 county = pd.read_csv('county_pop.csv',dtype=fips)
 
 #
-#  Set the index to the state and county, and then rename the 
-#  population column to make it easier to read.
+#  Set the index to the state and county (a two level MultiIndex), 
+#  and then rename the population column to make it easier to read.
 #
 
 county = county.set_index(['state','county'])
-county = county.rename({'B01001_001E':'pop'},axis='columns')
+county = county.rename(columns={'B01001_001E':'pop'})
 
 #%%
 #
@@ -27,7 +32,7 @@ dec = pd.qcut( county['pop'], 10, labels=range(1,11) )
 print( dec )
 
 #
-#  Add the decile into the dataframe
+#  Add the decile into the dataframe as a new column
 #
 
 county['dec'] = dec
@@ -40,8 +45,8 @@ county['dec'] = dec
 county = county.sort_values('pop')
 
 #
-#  Use the .xs() method to select and print the counties for 
-#  state 04, which is Arizona 
+#  Use the .xs() method (short for cross-section) to select and 
+#  print the counties for state 04, which is Arizona 
 #
 
 print( county.xs('04',level='state') )
@@ -66,6 +71,10 @@ print( state )
 #
 
 county['percent'] = 100*county['pop']/state
+
+#
+#  Print Arizona's information
+#
 
 print( county.xs('04',level='state') )
 

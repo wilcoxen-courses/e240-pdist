@@ -1,18 +1,18 @@
 # Exercise: Distributional Analysis Using Pandas
 
-### Summary
+## Summary
 
 This exercise uses Pandas to do the ETR calculation from the earlier assignment.
 
-### Input Data
+## Input Data
 
 Files **households.csv** and **quantities.csv** are the CSV files from the previous distributional analysis. As you'll probably recall, there are 1000 households in the analysis and households.csv has their attributes. It has five columns, `id`, `type`, `inc`, `a` and `b`, and there is one row for each household. The second file, quantities.csv, has three columns: `id`, `qd1`, and `qd2` and again there is one row for each household.
 
-### Deliverables
+## Deliverables
 
 A script called **etr.py** that carries out the calculations described below.
 
-### Instructions
+## Instructions
 
 1. Import pandas as pd.
 
@@ -58,10 +58,10 @@ A script called **etr.py** that carries out the calculations described below.
 
 1. Print `etr_change`.
 
-### Submitting
+## Submitting
 
 Once you're happy with everything and have committed all of the changes to your local repository, please push the changes to GitHub. At that point, you're done: you have submitted your answer.
 
-### Tips
+## Tips
 
-+ To convince yourself that the last calculation is working correctly, use a pocket calculator to check a couple of the numbers. This feature of Pandas (aligning and broadcasting across index levels) is very useful and avoids a lot of steps that would otherwise have to be done manually. Pandas is essentially doing a many-to-one join on `med_b` and `etr_change` before doing the subtraction. However, it's all automatic and the code is much cleaner than it would be otherwise. 
++ To convince yourself that the last calculation is working correctly, use a pocket calculator to check a couple of the numbers. This feature of Pandas (aligning and broadcasting across index levels) is very useful and avoids a lot of steps that would otherwise have to be done manually. Pandas is essentially doing a many-to-one join on `med_b` and `etr_change` before doing the subtraction. However, it's all automatic and the code is much cleaner than it would be otherwise.
