@@ -142,11 +142,11 @@ print( inc_stats[['25%','75%']])
 #  smallest and largest populations.
 #
 
-print( '\nFirst row in each group:')
+print( '\nFirst rows in each group:')
 first2 = group_by_state.head(2)
 print( first2 )
 
-print( '\nLast row in each group:')
+print( '\nLast rows in each group:')
 last2 = group_by_state.tail(2)
 print( last2 )
 
