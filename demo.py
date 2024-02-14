@@ -16,7 +16,7 @@ fips = { 'state':str, 'county':str }
 county = pd.read_csv('county_pop.csv',dtype=fips)
 
 #
-#  Set the index to the state and county (a two level MultiIndex), 
+#  Set the index to the state, county and name (a three-level MultiIndex),
 #  and then rename the population column to make it easier to read.
 #
 
@@ -45,14 +45,14 @@ county['dec'] = dec
 county = county.sort_values('pop')
 
 #
-#  Use the .xs() method (short for cross-section) to select and 
-#  print the counties for state 04, which is Arizona 
+#  Use the .xs() method (short for cross-section) to select and
+#  print the counties for state 04, which is Arizona
 #
 
 print( county.xs('04',level='state') )
 
 #
-#  Now group the counties by state and calculate each state's population. 
+#  Now group the counties by state and calculate each state's population.
 #  Then sort by population and print.
 #
 
@@ -62,11 +62,11 @@ state = state.sort_values()
 print( state )
 
 #
-#  Calculate each county's population as a percent of its state's 
-#  population. Note that this works even though county has two index 
-#  levels (state and county) and state has only one (state), and on 
+#  Calculate each county's population as a percent of its state's
+#  population. Note that this works even though county has two index
+#  levels (state and county) and state has only one (state), and on
 #  top of that, state is in a different order. Pandas automatically
-#  aligns the common index level (state) and broadcasts the state 
+#  aligns the common index level (state) and broadcasts the state
 #  populations across each state's counties.
 #
 
@@ -88,15 +88,15 @@ print( check )
 
 #%%
 #
-#  Demonstrate more features of groupby. First, trim the counties down to just 
-#  a couple of states for readability. We'll talk more about the .query() 
+#  Demonstrate more features of groupby. First, trim the counties down to just
+#  a couple of states for readability. We'll talk more about the .query()
 #  method later in the semester.
 #
 
 trimmed = county.query("state =='04' or state == '36'")
 
 #
-#  Now group the counties by state and iterate through the groups to show 
+#  Now group the counties by state and iterate through the groups to show
 #  their structure. Not usually needed.
 #
 
@@ -105,7 +105,7 @@ group_by_state = trimmed.groupby('state')
 for t,g in group_by_state:
     print(f'\nGroup for type {t}:\n')
     print(g)
-    
+
 #%%
 #
 #  Some quick aggregations, return one row per group
@@ -137,7 +137,7 @@ print( inc_stats[['25%','75%']])
 
 #%%
 #
-#  Selecting subsets of the records in each group. The dataframe was sorted 
+#  Selecting subsets of the records in each group. The dataframe was sorted
 #  by population so the first and last rows of each group will be that group's
 #  smallest and largest populations.
 #
@@ -152,7 +152,7 @@ print( last2 )
 
 #%%
 #
-#  The following could be used to find the largest populations if the 
+#  The following could be used to find the largest populations if the
 #  data were not already sorted. Returned largest to smallest within
 #  each group.
 #
@@ -164,7 +164,7 @@ print( largest )
 #%%
 #
 #  Producing information about ungrouped data. These all return objects
-#  having the same index as the original data (i.e., 5 rows here with 
+#  having the same index as the original data (i.e., 5 rows here with
 #  index columns 'id' and 'type'.
 #
 
@@ -183,4 +183,3 @@ print( cumulative_inc )
 print( '\nRank within group:')
 rank_age = group_by_state['pop'].rank()
 print( rank_age )
-
