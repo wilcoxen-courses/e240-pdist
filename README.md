@@ -24,7 +24,7 @@ To help make the structure of the analysis clearer, the instructions below have 
 
 1. Define a function called `print_groups()` that takes two arguments, a dataframe of household information called `hh`, and a list of variables called `group_vars` that will be used to group the data. The body of the function should do the following:
 
-    1. Group the data by setting variable `grouped` to the result of calling the `.groupby()` method on `hh` using `group_vars` as the argument.
+    1. Group the data by setting variable `grouped` to the result of calling the `.groupby()` method on `hh` using `group_vars` as the argument. If you get a FutureWarning on this line see the Tips section.
 
     1. Set variable `med` to the result of calling the `.median()` method on `grouped` column `"etr"`.
 
@@ -83,3 +83,5 @@ Once you're happy with everything and have committed all of the changes to your 
 ## Tips
 
 + To convince yourself that the last calculation is working correctly, use a pocket calculator to check a couple of the numbers. This feature of Pandas (aligning and broadcasting across index levels) is very useful and avoids a lot of steps that would otherwise have to be done manually. Pandas is essentially doing a many-to-one join on `med_b` and `etr_change` before doing the subtraction. However, it's all automatic and the code is much cleaner than it would be otherwise.
+
++ If you get a FutureWarning on the `.groupby()` call in the function it's OK to ignore it. It's warning you that an internal setting will be changed in future versions of Pandas but that particular setting doesn't make a difference in this script.
