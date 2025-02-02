@@ -6,7 +6,7 @@ This exercise carries out a detailed distributional analysis of the tax in the e
 
 ## Input Data
 
-File **households.csv** is the earlier file giving data on 1000 households. As before, it has five columns, `id`, `type`, `inc`, `a` and `b`, and there is one row for each household. The `type` variable wasn't used before but it will be important in this exercise. It ranges from 1 to 4 and indicates the demographic type of the household. Here we'll think of it as indicating the region of the country where the household resides. In other studies it could be used to indicate other characteristics, such as the race, gender, or age of the household's head, the size of the household, whether the household lives in an urban or rural area, and so on. In those cases there would be many more than four types.
+File **households.csv** is the earlier file giving data on 1000 households. As before, it has five columns, `id`, `type`, `inc`, `a` and `b`, and there is one row for each household. The `type` variable wasn't used before but it will be important in this exercise. It gives the demographic type of the household and takes on the values N, S, E and W, which indicate the region of the country where the household resides (north, south, east or west). In other studies it could be used to indicate other characteristics, such as the race, gender, or age of the household's head, the size of the household, whether the household lives in an urban or rural area, and so on. In those cases there would be many more than four types.
 
 File **quantities.csv** gives the quantities demanded by each household under the base case and tax policy simulations. It has three columns, one for the household's ID and one each for the household's demands under the base and policy cases: `id`, `qd1` and `qd2`. In case you're curious, it was produced by running the earlier `ind_demand()` function for each equilibrium price and then writing out the output. However, you do not need to do that for this exercise: you should use the provided **quantities.csv** without recalculating it.
 
@@ -58,7 +58,7 @@ Next we'll explore the results by aggregating the ETR results in several ways: b
 
 1. Print the index for `med_b`. Notice that it's a list of tuples with the type as the first element and the quintile as the second element.
 
-1. Print an appropriate heading and then print the detailed medians for type `3` by using the `.xs()` method (short for cross-section) on `med_b` with arguments `3` and `level="type"`. The `level` keyword tells Pandas that the `3` is associated with the `"type"` part, or level, of the index.
+1. Print an appropriate heading and then print the detailed medians for type `E` by using the `.xs()` method (short for cross-section) on `med_b` with arguments `E` and `level="type"`. The `level` keyword tells Pandas that the `E` is associated with the `"type"` part, or level, of the index.
 
 1. Print an appropriate heading and then list the medians for the 5th quintile by using the `.xs()` method with arguments `5` and `level="quint"`.
 
